@@ -1,0 +1,15 @@
+<app-header></app-header>
+
+<div class="page-container">
+  <app-order-details *ngIf="orderSuccess === 0"></app-order-details>
+
+  <app-order-form
+    *ngIf="orderSuccess === 0"
+    (newItemEvent)="showSuccessMessage()"
+  ></app-order-form>
+
+  <app-order-success
+    [orderSuccess]="orderSuccess"
+    (newItemEvent)="closeMessageAndMoveToLoginPage()"
+  ></app-order-success>
+</div>

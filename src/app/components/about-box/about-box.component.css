@@ -1,0 +1,21 @@
+.about-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 70vh;
+  width: 500px;
+  background-color: #fff;
+  padding: 2rem 5rem 0 5rem;
+  border: var(--box-border);
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+}
+
+img {
+  width: 100%;
+}
+
+.about-para {
+  padding-top: 1rem;
+  font-size: 1rem;
+}

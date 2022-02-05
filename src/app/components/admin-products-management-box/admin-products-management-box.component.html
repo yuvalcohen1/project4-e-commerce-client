@@ -1,0 +1,88 @@
+<div class="container">
+  <button class="add-product-btn" (click)="onPlusClick()">
+    ADD PRODUCT ּ+
+  </button>
+
+  <div class="main">
+    <h2 [hidden]="!showAddProduct || (pressedProduct$ | async)!._id">
+      Add Product:
+    </h2>
+    <h2 [hidden]="!(pressedProduct$ | async)!._id">Update Product:</h2>
+    <form
+      ngNativeValidate
+      #productForm
+      [hidden]="!(pressedProduct$ | async)!._id && !showAddProduct"
+      (ngSubmit)="
+        onSave(
+          category.value,
+          imgUrl.value,
+          price.value,
+          productName.value,
+          productForm
+        )
+      "
+    >
+      <div class="group">
+        <label for="productName">product name:</label>
+        <input
+          #productName
+          type="text"
+          [value]="
+            (pressedProduct$ | async)!._id
+              ? (pressedProduct$ | async)!.productName
+              : null
+          "
+          required
+        />
+      </div>
+
+      <div class="group">
+        <label for="price">price:</label>
+        <input
+          #price
+          type="number"
+          [value]="
+            (pressedProduct$ | async)!._id
+              ? (pressedProduct$ | async)!.price
+              : null
+          "
+          required
+        />
+      </div>
+
+      <div class="group">
+        <label for="imgUrl">image url:</label>
+        <input
+          #imgUrl
+          type="text"
+          [value]="
+            (pressedProduct$ | async)!._id
+              ? (pressedProduct$ | async)!.imgUrl
+              : null
+          "
+          required
+        />
+      </div>
+
+      <div class="group">
+        <label for="category">category:</label>
+        <select name="category" id="category" #category>
+          <option
+            *ngFor="let category of categories$ | async; index as i"
+            value="{{ category._id }}"
+            [selected]="
+              (pressedProduct$ | async)!._id
+                ? (pressedProduct$ | async)!.categoryId === category._id
+                : i === 1
+            "
+            [hidden]="category.categoryName === 'All'"
+          >
+            {{ category.categoryName !== "All" ? category.categoryName : null }}
+          </option>
+        </select>
+      </div>
+
+      <button type="submit" class="save-btn">SAVE</button>
+    </form>
+  </div>
+</div>

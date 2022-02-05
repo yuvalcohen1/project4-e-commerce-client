@@ -1,0 +1,21 @@
+<div class="cart-items">
+  <div class="empty" *ngIf="!(cartItems$ | async)!.length">Cart is empty...</div>
+
+  <div class="cart-item" *ngFor="let cartItem of cartItems$ | async">
+    <img class="cart-item-img" src="{{ cartItem.product.imgUrl }}" />
+    <div class="item-details">
+      <div class="item-name">{{ cartItem.product.productName }}</div>
+      <div class="item-price-and-quantity">
+        <div class="price">price: ${{ cartItem.product.price }}</div>
+        <span> / </span>
+        <div class="quantity">quantity: {{ cartItem.quantity }}</div>
+      </div>
+    </div>
+    <div>
+      <i
+        class="fas fa-trash-alt remove-cart-item"
+        (click)="onDeleteCartItem(cartItem._id!)"
+      ></i>
+    </div>
+  </div>
+</div>

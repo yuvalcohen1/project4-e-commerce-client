@@ -1,0 +1,9 @@
+.page-container {
+  background-image: linear-gradient(360deg, #6c6f70dc 0%, #d3d3d3 74%);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+

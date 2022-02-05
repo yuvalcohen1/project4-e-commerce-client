@@ -1,0 +1,121 @@
+.register-box {
+  position: relative;
+  width: 410px;
+  background-color: #fff;
+  border: 4px solid var(--light-orange);
+  border-radius: 5px;
+  text-align: center;
+  padding: 50px 35px 10px 35px;
+  top: 30px;
+}
+
+.register-box .form-outer {
+  width: 100%;
+  overflow: hidden;
+}
+
+.form-outer form {
+  display: flex;
+  width: 200%;
+}
+
+.form-outer form .page {
+  width: 50%;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.form-outer form .page .field {
+  height: 45px;
+  width: 330px;
+  margin: 45px 0;
+  display: flex;
+  position: relative;
+}
+
+.form-outer form .page .field .label {
+  position: absolute;
+  top: -30px;
+  font-weight: 500;
+}
+
+.form-outer form .page .field input {
+  height: 100%;
+  width: 100%;
+  background-color: var(--gray);
+  border-radius: 0.5rem;
+  font-size: 18px;
+  padding-left: 15px;
+}
+
+button {
+  background: none;
+  border: 0.2rem solid var(--dark);
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  padding: 0 1rem;
+  font-weight: bolder;
+}
+
+button:disabled {
+  border-color: grey;
+  cursor: not-allowed;
+}
+
+button:hover {
+  background-color: var(--dark);
+  color: #fff;
+}
+
+button:hover:disabled {
+  background: none;
+  color: rgba(16, 16, 16, 0.3);
+}
+
+.error {
+  position: absolute;
+  top: -30px;
+  right: 0;
+  color: red;
+}
+
+.jwtError {
+  color: red;
+  position: absolute;
+  bottom: 18%;
+  right: 25%;
+}
+
+.confirm-password-error {
+  position: absolute;
+  bottom: -70%;
+  color: red;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+}
+
+.prev {
+  margin-right: 4px;
+}
+
+.submit {
+  margin-left: 4px;
+}
+
+.continue-and-back-to-login {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.back-to-login {
+  width: 40%;
+}
+
+.continue-btn {
+  height: 100%;
+}

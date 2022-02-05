@@ -1,0 +1,74 @@
+<div class="container">
+  <form class="order-form" (ngSubmit)="onSubmit()" [formGroup]="form">
+    <div class="inner-container">
+      <div class="form-sections">
+        <div class="shipping-details-section section">
+          <h1>Shipping Details</h1>
+
+          <hr />
+
+          <div class="group">
+            <label for="city">City</label>
+            <select required formControlName="cityForShipping">
+              <option
+                *ngFor="let city of cities$ | async"
+                [selected]="city === (userDetails$ | async)!.city"
+                [value]="city"
+              >
+                {{ city }}
+              </option>
+            </select>
+          </div>
+
+          <div class="group">
+            <label for="street">Street</label>
+            <input type="text" required formControlName="streetForShipping" />
+            <div *ngIf=""></div>
+          </div>
+
+          <div class="form-group group">
+            <div><label>Shipping Date</label></div>
+            <div class="input-group">
+              <input
+                class="form-control"
+                placeholder="yyyy-mm-dd"
+                ngbDatepicker
+                #d="ngbDatepicker"
+                [minDate]="minDate"
+                [markDisabled]="disableDates"
+                formControlName="shippingDate"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary calendar"
+                  (click)="d.toggle()"
+                  type="button"
+                >
+                  <i class="far fa-calendar-alt"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="payments-section section">
+          <h1>Payments</h1>
+
+          <hr />
+
+          <div class="group">
+            <label for="credit-card">Credit Card (Visa)</label>
+            <input
+              type="text"
+              pattern="^4[0-9]{12}(?:[0-9]{3})?$"
+              formControlName="creditCardNumber"
+            />
+          </div>
+        </div>
+      </div>
+      <button class="order-btn" type="submit" [disabled]="form.invalid">
+        Order
+      </button>
+    </div>
+  </form>
+</div>

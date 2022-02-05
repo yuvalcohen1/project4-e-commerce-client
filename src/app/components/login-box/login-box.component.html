@@ -1,0 +1,62 @@
+<div class="login-box">
+  <div *ngIf="(userDetails$ | async) && (cartDetails$ | async)">
+    <button
+      class="shopping-btn"
+      *ngIf="!(cartDetails$ | async)!._id || !(cartDetails$ | async)!.isOpen"
+      (click)="onStartShoppingClick()"
+    >
+      start shopping
+    </button>
+  </div>
+  <div *ngIf="(userDetails$ | async) && (cartDetails$ | async)">
+    <button
+      class="shopping-btn"
+      *ngIf="(cartDetails$ | async)!._id && (cartDetails$ | async)!.isOpen"
+      (click)="onResumeShoppingClick()"
+    >
+      resume shopping
+    </button>
+  </div>
+
+  <div *ngIf="!(userDetails$ | async)">
+    <h1>Registered?</h1>
+    <form ngNativeValidate #loginForm (ngSubmit)="onSubmit(loginForm)">
+      <div class="form-group">
+        <div>
+          <label for="email">Email:</label>
+        </div>
+        <input
+          type="email"
+          class="form-input"
+          placeholder="Type your email..."
+          name="email"
+          [(ngModel)]="email"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <div>
+          <label for="password">Password:</label>
+        </div>
+        <input
+          type="password"
+          class="form-input"
+          placeholder="Type your password..."
+          name="password"
+          [(ngModel)]="password"
+          required
+        />
+      </div>
+
+      <div class="error" *ngIf="jwtErrorMessage">
+        {{ jwtErrorMessage }}
+      </div>
+
+      <div class="btns">
+        <button type="submit" class="login-btn btn">Login</button>
+        <a routerLink="/register" class="btn">Sign Up</a>
+      </div>
+    </form>
+  </div>
+</div>

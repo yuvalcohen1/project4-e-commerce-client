@@ -1,0 +1,9 @@
+<div
+  class="categories"
+  [ngClass]="{ 'extended-categories': cartStatus$ | async }"
+>
+  <app-category
+    *ngFor="let category of categories"
+    [category]="category"
+  ></app-category>
+</div>

@@ -1,0 +1,10 @@
+.add-to-cart-btn {
+    border: 1px solid var(--dark);
+    margin-top: 1.2rem;
+    transition: background-color color 0.3s;
+}
+
+.add-to-cart-btn:hover {
+    background-color: var(--dark);
+    color: #fff;
+}

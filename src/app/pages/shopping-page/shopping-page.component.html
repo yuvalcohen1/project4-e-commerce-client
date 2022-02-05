@@ -1,0 +1,46 @@
+<app-header></app-header>
+
+<div *ngIf="userDetails$ | async">
+  <div
+    *ngIf="(userDetails$ | async)!.isAdmin === 0"
+    class="page-container non-admin-page"
+  >
+    <div class="main">
+      <div
+        class="cart-container"
+        [ngClass]="{ 'hidden-cart-container': cartStatus$ | async }"
+      >
+        <app-shopping-cart></app-shopping-cart>
+      </div>
+      <div
+        class="products-and-categories"
+        [ngClass]="{
+          'extended-products-and-categories': cartStatus$ | async
+        }"
+      >
+        <app-categories></app-categories>
+
+        <app-products></app-products>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="userDetails$ | async">
+  <div
+    *ngIf="(userDetails$ | async)!.isAdmin === 1"
+    class="page-container admin-page"
+  >
+    <div class="main admin-main">
+      <app-admin-products-management-box></app-admin-products-management-box>
+      <div
+        class="products-and-categories"
+        [ngClass]="{ 'extended-products-and-categories': cartStatus$ | async }"
+      >
+        <app-categories></app-categories>
+
+        <app-products></app-products>
+      </div>
+    </div>
+  </div>
+</div>

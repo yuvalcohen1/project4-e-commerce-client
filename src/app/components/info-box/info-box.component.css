@@ -1,0 +1,20 @@
+.info-box {
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  border: var(--box-border);
+  border-radius: 0.5rem;
+  box-shadow: var(--box-shadow);
+  padding: 2rem 2rem 0 2rem;
+  height: 70vh;
+  width: 400px;
+}
+
+.info-part {
+  padding: 3rem 0 3rem 0;
+  font-size: 1.7rem;
+}
+
+.notifications {
+  color: var(--orange);
+}

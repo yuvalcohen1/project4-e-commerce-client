@@ -1,0 +1,29 @@
+.order-success {
+  width: 30vw;
+  height: 35vh;
+  background-color: var(--light-orange);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+  text-align: center;
+  border-radius: 0.7rem;
+  color: var(--dark);
+}
+
+h1 {
+  color: var(--dark);
+}
+
+span {
+  color: var(--gray);
+}
+
+button {
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  background-color: var(--dark);
+  color: #fff;
+  cursor: pointer;
+}

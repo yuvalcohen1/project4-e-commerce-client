@@ -1,0 +1,179 @@
+<div class="register-box">
+  <h1>Register</h1>
+
+  <div class="form-outer">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="page" #slidepage>
+        <div class="field">
+          <div class="label">ID:</div>
+
+          <input
+            type="number"
+            class="idNum-input form-control"
+            formControlName="idNum"
+            required
+          />
+          <div
+            class="error"
+            *ngIf="form.get('idNum')!.invalid && form.get('idNum')!.touched"
+          >
+            ID is required
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Email:</div>
+          <input
+            type="email"
+            class="email-input form-control"
+            formControlName="email"
+            required
+          />
+          <div
+            class="error"
+            *ngIf="form.get('email')!.invalid && form.get('email')!.touched"
+          >
+            Email is required
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Password:</div>
+          <input
+            #password
+            type="password"
+            class="password-input form-control"
+            formControlName="password"
+            required
+          />
+          <div
+            class="error"
+            *ngIf="
+              form.get('password')!.invalid && form.get('password')!.touched
+            "
+          >
+            Password is required
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Confirm Password:</div>
+          <input
+            #cPassword
+            type="password"
+            class="confirms-password-input form-control"
+            formControlName="confirmPassword"
+            required
+          />
+          <div
+            class="confirm-password-error"
+            *ngIf="
+              form.get('password')!.valid &&
+              form.get('confirmPassword')!.touched &&
+              password.value !== cPassword.value
+            "
+          >
+            Password confirmation doesn't match
+          </div>
+        </div>
+
+        <div class="field continue-and-back-to-login">
+          <button
+            type="button"
+            class="continue-btn"
+            [disabled]="disable()"
+            (click)="slidepage.style.marginLeft = '-50%'"
+          >
+            Continue
+          </button>
+          <a class="back-to-login" routerLink="/home"
+            >already have an account?</a
+          >
+        </div>
+      </div>
+
+      <div class="page">
+        <div class="field">
+          <div class="label">City:</div>
+          <select class="city-input form-control" formControlName="city">
+            <option *ngFor="let city of cities$ | async" [value]="city">
+              {{ city }}
+            </option>
+          </select>
+          <div class="error" *ngIf="form.get('city')!.invalid">
+            City is required
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Street:</div>
+          <input
+            type="text"
+            class="street-input form-control"
+            formControlName="street"
+            required
+          />
+          <div
+            class="error"
+            *ngIf="form.get('street')!.invalid && form.get('street')!.touched"
+          >
+            Street is required
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label">First Name:</div>
+          <input
+            type="text"
+            class="first-name-input form-control"
+            formControlName="firstName"
+            required
+          />
+          <div
+            class="error"
+            *ngIf="
+              form.get('firstName')!.invalid && form.get('firstName')!.touched
+            "
+          >
+            First name is required
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Last Name:</div>
+          <input
+            type="text"
+            class="last-name-input form-control"
+            formControlName="lastName"
+            required
+          />
+          <div
+            class="error"
+            *ngIf="
+              form.get('lastName')!.invalid && form.get('lastName')!.touched
+            "
+          >
+            Last name is required
+          </div>
+        </div>
+
+        <div class="jwtError" *ngIf="jwtErrorMessage">
+          {{ jwtErrorMessage }}
+        </div>
+
+        <div class="field btns">
+          <button
+            type="button"
+            class="prev"
+            (click)="slidepage.style.marginLeft = '0%'"
+          >
+            Previous
+          </button>
+          <button type="submit" class="submit" [disabled]="form.invalid">
+            Submit
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

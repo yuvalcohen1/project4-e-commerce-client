@@ -1,0 +1,32 @@
+<div class="products">
+  <div
+    class="container"
+    *ngFor="let product of products$ | async"
+    (click)="onProductClick(product)"
+  >
+    <div
+      class="product-outer"
+      [ngClass]="{ 'admin-product-outer': (userDetails$ | async)!.isAdmin }"
+    >
+      <div
+        class="product"
+        [ngClass]="{
+          'pressed-product': product._id === (pressedProduct | async)!._id,
+          'admin-product': (userDetails$ | async)!.isAdmin
+        }"
+      >
+        <div class="product-image">
+          <img src="{{ product.imgUrl }}" />
+        </div>
+
+        <div class="product-name">{{ product.productName }}</div>
+        <div class="price">${{ product.price }}</div>
+        <app-add-to-cart-modal
+          *ngIf="(userDetails$ | async)!.isAdmin === 0"
+          [product]="product"
+          [hidden]=""
+        ></app-add-to-cart-modal>
+      </div>
+    </div>
+  </div>
+</div>

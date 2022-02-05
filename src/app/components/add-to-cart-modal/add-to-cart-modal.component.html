@@ -1,0 +1,42 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">
+      {{ product.productName }}
+    </h4>
+    <button
+      type="button"
+      class="close"
+      aria-label="Close"
+      (click)="modal.dismiss('Cross click')"
+    >
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form ngNativeValidate (ngSubmit)="onSaveItem(modal, quantity.value)">
+    <div class="modal-body">
+      <div class="form-group">
+        <label for="quantity">Quantity</label>
+        <div class="input-group">
+          <input
+            type="number"
+            id="quantity"
+            class="form-control"
+            #quantity
+            required
+          />
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-outline-dark">Save</button>
+    </div>
+  </form>
+</ng-template>
+
+<button
+  class="btn btn-lg add-to-cart-btn"
+  (click)="open(content)"
+  [hidden]="shouldHideAddToCartBtn()"
+>
+  ADD TO CART
+</button>

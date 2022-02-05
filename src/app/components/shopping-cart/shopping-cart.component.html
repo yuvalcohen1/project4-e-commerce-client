@@ -1,0 +1,20 @@
+<div class="cart">
+  <app-cart-items></app-cart-items>
+
+  <div class="total-and-checkout-and-empty-cart">
+    <button class="empty-cart-btn" *ngIf="(cartItems$ | async)!.length" (click)="onEmptyCartItems()">
+      Empty Cart
+    </button>
+    <div class="total">Total: ${{ total }}</div>
+    <button
+      class="checkout-btn"
+      (click)="onCheckoutClick()"
+      [disabled]="(cartItems$ | async)!.length === 0"
+    >
+      CHECKOUT
+    </button>
+  </div>
+  <button class="cart-btn" (click)="onCartClick()">
+    <i class="fas fa-shopping-cart"></i>
+  </button>
+</div>

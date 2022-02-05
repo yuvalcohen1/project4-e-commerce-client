@@ -1,0 +1,37 @@
+<div class="header-container">
+  <div class="header">
+    <span class="logo"> <i class="fas fa-shopping-basket"></i> SHOPO</span>
+
+    <div class="contact">
+      <div>contact us:</div>
+      <div class="email">email: shopo@gmail.com</div>
+      <div class="phone">phone: 03-5555555</div>
+    </div>
+  </div>
+
+  <div [ngSwitch]="currentPath" class="sub-header-container">
+    <div class="home-sub-header" *ngSwitchCase="'/home'">
+      <div *ngIf="userDetails$ | async" class="hello">
+        Hello {{ (userDetails$ | async)!.firstName | uppercase }}
+      </div>
+      <div *ngIf="!(userDetails$ | async)" class="hello">Hello Guest</div>
+    </div>
+
+    <div class="shopping-sub-header" *ngSwitchCase="'/shopping'">
+      <div class="search">
+        <form
+          (ngSubmit)="onSearchClick(searchInput.value)"
+          class="search-products-form"
+        >
+          <label class="search-label">Search Product</label>
+          <input type="text" minlength="2" required #searchInput />
+
+          <button class="search-products-btn" type="submit">
+            <i class="fas fa-search"></i>
+          </button>
+        </form>
+      </div>
+      <div class="logout" (click)="onLogout()">Logout</div>
+    </div>
+  </div>
+</div>

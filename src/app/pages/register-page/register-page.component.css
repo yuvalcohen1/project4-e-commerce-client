@@ -1,0 +1,12 @@
+.page-container {
+  color: var(--dark);
+  background-image: linear-gradient(360deg, #979a9b 0%, #f5f4f4 74%);
+  height: 100vh;
+}
+
+.main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}

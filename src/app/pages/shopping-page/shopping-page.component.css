@@ -1,0 +1,40 @@
+.page-container {
+  background-image: linear-gradient(360deg, #6c6f70dc 0%, #d3d3d3 74%);
+}
+
+.main {
+  display: flex;
+  justify-content: flex-end;
+  min-height: 100vh;
+}
+
+.products-and-categories {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70vw;
+  margin-top: 9%;
+  transition: width 1s;
+}
+
+.extended-products-and-categories {
+  width: 90vw;
+}
+
+/* categories */
+
+/* cart style */
+
+.cart-container {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 83vh;
+  width: 30vw;
+  display: flex;
+  transition: left 1s;
+}
+
+.cart-container.hidden-cart-container {
+  left: -20.9vw;
+}

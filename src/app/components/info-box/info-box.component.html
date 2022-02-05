@@ -1,0 +1,14 @@
+<div class="info-box">
+  <div class="orders-amount info-part">
+    {{ numOfAllOrders }} orders submitted in our store
+  </div>
+  <div class="products-amount info-part">
+    {{ numOfAvailableProducts }} products are currently available in our store
+  </div>
+  <div class="notifications info-part" *ngIf="userDetails$ | async">
+    <div *ngIf="!(userDetails$ | async)!.isAdmin">
+      Notification: <br />
+      {{ notifications }}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+.header-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  box-shadow: var(--box-shadow);
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 6%;
+  font-weight: bolder;
+  background-color: #fff;
+  height: 10vh;
+}
+
+.sub-header-container {
+  background-color: var(--light-orange);
+  height: 7vh;
+}
+
+.home-sub-header {
+  background-color: var(--light-orange);
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  height: 100%;
+  padding-right: 10%;
+  font-size: 1.5rem;
+}
+
+.shopping-sub-header {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+  align-items: center;
+}
+
+.logout {
+  padding-right: 6%;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.search {
+  font-size: 1.5rem;
+  padding-left: 6%;
+}
+
+.search input {
+  font-size: 1rem;
+}
+
+.search-label {
+  padding-right: 1vw;
+}
+
+.logo {
+  font-size: 2.5rem;
+}
+
+.logo i {
+  color: var(--orange);
+}
+
+.search-products-form {
+  display: flex;
+}
+
+.search-products-form label,
+.search-products-form input,
+.search-products-form button {
+  display: block;
+}
+
+.search-products-form button {
+  padding: 0 0.5rem 0 0.5rem;
+  border: 1px solid var(--dark);
+  background-color: dimgray;
+  color: #fff;
+}
+
+.search-products-form input {
+  padding-left: 1rem;
+}

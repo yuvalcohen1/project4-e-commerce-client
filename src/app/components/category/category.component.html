@@ -1,0 +1,10 @@
+<div
+  class="category"
+  [ngClass]="{
+    'checked-category':
+      category.categoryName === (checkedCategory$ | async)!.categoryName
+  }"
+  (click)="onCategoryClick()"
+>
+  {{ category.categoryName }}
+</div>

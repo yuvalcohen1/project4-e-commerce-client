@@ -1,0 +1,14 @@
+<div class="order-success" *ngIf="orderSuccess === 1">
+  <h1>purchase was made successfully</h1>
+  <div>
+    To download the receipt,
+    <a
+      href="http://localhost:3000/orders/receipt-file/{{
+        (userDetails$ | async)!._id
+      }}"
+      >click here</a
+    >
+    <!-- <span (click)="downloadReceiptFile()">click here</span> -->
+  </div>
+  <button (click)="onClick()">confirm</button>
+</div>

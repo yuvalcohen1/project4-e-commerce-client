@@ -1,0 +1,38 @@
+.cart-items {
+  height: 50vh;
+  overflow-y: auto;
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border: 1px solid gray;
+  height: 20%;
+  margin-bottom: 1rem;
+}
+
+.item-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.item-price-and-quantity {
+  display: flex;
+}
+
+.cart-item-img {
+  height: 80%;
+}
+
+.item-name {
+  font-weight: bolder;
+}
+
+.remove-cart-item {
+  cursor: pointer;
+}
+
+.empty {
+  margin-top: 4rem;
+}

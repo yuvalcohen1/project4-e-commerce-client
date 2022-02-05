@@ -1,0 +1,10 @@
+.category {
+  padding: 1.5rem 0;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.checked-category {
+  font-weight: bold;
+  text-decoration: underline;
+}

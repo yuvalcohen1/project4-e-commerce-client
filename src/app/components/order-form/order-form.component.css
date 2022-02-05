@@ -1,0 +1,52 @@
+.container {
+  height: 90vh;
+  width: 35vw;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  color: var(--dark);
+}
+
+.group {
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 1rem;
+}
+
+.order-form {
+  width: 90%;
+  height: 75vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 1rem;
+}
+
+.inner-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  height: 90%;
+}
+
+input,
+select {
+  height: 2.5rem;
+  padding-left: 0.5rem;
+  border: 1px solid lightgray;
+  border-radius: 1rem;
+}
+
+.order-btn {
+  width: 25%;
+  padding: 0.5rem 0;
+  border: none;
+  background-color: var(--light-orange);
+  border-radius: 0.3rem;
+}
+
+.order-btn:disabled {
+  background-color: rgb(250, 168, 96, 0.4);
+}

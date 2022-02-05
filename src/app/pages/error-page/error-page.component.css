@@ -1,0 +1,22 @@
+.error-page {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+}
+
+h1 {
+    font-size: 5rem
+}
+
+h2 {
+    padding: 1.3rem;
+}
+
+button {
+    border: none;
+    border-radius: 1rem;
+    background-color: dodgerblue;
+    padding: 1rem;
+}
