@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { firstValueFrom } from 'rxjs';
 import { AppState } from '../models/AppState.model';
 import { ProductModel } from '../models/Product.model';
 import {
@@ -91,7 +92,15 @@ export class ProductsService {
       )
       .toPromise())!;
 
-    this.store.dispatch(addProduct({ newProduct }));
+    const checkedCategory = await firstValueFrom(
+      this.store.select((state) => state.checkedCategory)
+    );
+    if (
+      checkedCategory.categoryName === 'All' ||
+      checkedCategory._id === newProduct.categoryId
+    ) {
+      this.store.dispatch(addProduct({ newProduct }));
+    }
 
     return newProduct;
   }

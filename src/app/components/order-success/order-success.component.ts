@@ -40,7 +40,11 @@ export class OrderSuccessComponent implements OnInit {
   //   await this.ordersService.downloadReceiptFile(jwt);
   // }
 
-  onClick() {
+  // async onClick() {
+  //   await this.ordersService.downloadReceiptFile();
+  // }
+
+  onConfirm() {
     this.newItemEvent.emit();
   }
 }

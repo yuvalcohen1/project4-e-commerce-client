@@ -26,7 +26,7 @@ export class UsersService {
     return jwt;
   }
 
-  async fetchJwtRegister(userDetails: RegisterModel) {
+  async fetchJwtByRegister(userDetails: RegisterModel) {
     const { jwt } = (await this.http
       .post<{ jwt: string }>(`${this.API_URL}/register`, userDetails)
       .toPromise())!;
@@ -38,14 +38,15 @@ export class UsersService {
   }
 
   async fetchUserDetails(jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //     'Content-Type': 'application/json',
+    //     Authorization: `Bearer ${jwt}`,
+    //   }),
+    // };
+
     const userDetails = await this.http
-      .get<UserDetailsModel>(`${this.API_URL}/user-details`, httpOptions)
+      .get<UserDetailsModel>(`${this.API_URL}/user-details`)
       .toPromise();
 
     this.store.dispatch(fetchUserDetails({ userDetails }));

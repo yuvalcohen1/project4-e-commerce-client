@@ -56,7 +56,7 @@ export class RegisterBoxComponent implements OnInit {
 
   async onSubmit() {
     try {
-      const { jwt } = await this.usersService.fetchJwtRegister(this.form.value);
+      const { jwt } = await this.usersService.fetchJwtByRegister(this.form.value);
 
       await this.usersService.fetchUserDetails(jwt);
 

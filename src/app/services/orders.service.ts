@@ -62,16 +62,4 @@ export class OrdersService {
 
     return newOrder;
   }
-
-  async downloadReceiptFile(jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
-    return await this.http
-      .get(`${this.API_URL}/receipt-file`, httpOptions)
-      .toPromise();
-  }
 }
