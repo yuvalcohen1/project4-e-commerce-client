@@ -13,7 +13,6 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./category.component.css'],
 })
 export class CategoryComponent implements OnInit {
-  jwt$?: Observable<string>;
   checkedCategory$?: Observable<CategoryModel>;
 
   @Input()
@@ -30,8 +29,6 @@ export class CategoryComponent implements OnInit {
       (state) => state.checkedCategory
     );
 
-    this.jwt$ = this.store.select<string>((state) => state.jwt);
-
     if (this.category.categoryName === 'All') {
       this.store.dispatch(
         fetchCheckedCategory({ checkedCategory: this.category })
@@ -41,14 +38,12 @@ export class CategoryComponent implements OnInit {
 
   async onCategoryClick() {
     try {
-      const jwt = await firstValueFrom(this.jwt$!);
-
       if (this.category.categoryName === 'All') {
         this.store.dispatch(
           fetchCheckedCategory({ checkedCategory: this.category })
         );
 
-        await this.productsService.fetchAllProducts(jwt);
+        await this.productsService.fetchAllProducts();
         return;
       }
 
@@ -56,10 +51,7 @@ export class CategoryComponent implements OnInit {
         fetchCheckedCategory({ checkedCategory: this.category })
       );
 
-      await this.productsService.fetchProductsByCategoryId(
-        this.category._id,
-        jwt
-      );
+      await this.productsService.fetchProductsByCategoryId(this.category._id);
     } catch (error) {
       this.router.navigate(['/error']);
     }

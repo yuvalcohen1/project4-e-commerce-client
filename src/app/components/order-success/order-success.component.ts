@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { first, firstValueFrom, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AppState } from 'src/app/models/AppState.model';
 import { UserDetailsModel } from 'src/app/models/UserDetails.model';
 import { CartsService } from 'src/app/services/carts.service';
@@ -12,7 +12,6 @@ import { OrdersService } from 'src/app/services/orders.service';
   styleUrls: ['./order-success.component.css'],
 })
 export class OrderSuccessComponent implements OnInit {
-  jwt$?: Observable<string>;
   userDetails$?: Observable<UserDetailsModel>;
 
   @Input()
@@ -28,21 +27,10 @@ export class OrderSuccessComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.jwt$ = this.store.select<string>((state) => state.jwt);
-
     this.userDetails$ = this.store.select<UserDetailsModel>(
       (state) => state.userDetails
     );
   }
-
-  // async downloadReceiptFile() {
-  //   const jwt = await firstValueFrom(this.jwt$!);
-  //   await this.ordersService.downloadReceiptFile(jwt);
-  // }
-
-  // async onClick() {
-  //   await this.ordersService.downloadReceiptFile();
-  // }
 
   onConfirm() {
     this.newItemEvent.emit();

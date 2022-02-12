@@ -15,7 +15,6 @@ import { CartsService } from 'src/app/services/carts.service';
   styleUrls: ['./add-to-cart-modal.component.css'],
 })
 export class AddToCartModalComponent implements OnInit {
-  jwt$?: Observable<string>;
   cartDetails$?: Observable<CartDetailsModel>;
   cartItems$?: Observable<CartItemModel[]>;
 
@@ -44,8 +43,6 @@ export class AddToCartModalComponent implements OnInit {
     this.cartItems$.subscribe((cartItems) => {
       this.cartItems = cartItems;
     });
-
-    this.jwt$ = this.store.select<string>((state) => state.jwt);
   }
 
   shouldHideAddToCartBtn(): boolean {
@@ -81,13 +78,11 @@ export class AddToCartModalComponent implements OnInit {
     modal.close('Save click');
 
     try {
-      const jwt = await firstValueFrom(this.jwt$!);
       const cartDetails = await firstValueFrom(this.cartDetails$!);
       this.cartsService.addCartItem(
         cartDetails._id,
         this.product._id!,
-        Number(quantity),
-        jwt
+        Number(quantity)
       );
     } catch (error) {
       this.router.navigate(['/error']);

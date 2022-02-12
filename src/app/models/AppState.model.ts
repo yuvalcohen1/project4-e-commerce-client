@@ -4,7 +4,6 @@ import { CategoryModel } from './Category.model';
 import { ProductModel } from './Product.model';
 
 export interface AppState {
-  jwt: string;
   userDetails: any; // UserDetailsModel | null
   products: ProductModel[];
   categories: CategoryModel[];

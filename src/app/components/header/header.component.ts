@@ -2,15 +2,15 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { firstValueFrom, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { AppState } from 'src/app/models/AppState.model';
 import { UserDetailsModel } from 'src/app/models/UserDetails.model';
 import { resetCartDetails } from 'src/app/ngrx/cart-details/cart-details.action';
 import { emptyCartItems } from 'src/app/ngrx/cart-items/cart-items.action';
 import { resetCheckedCategory } from 'src/app/ngrx/checked-category/checked-category.action';
 import { resetUserDetailsToNull } from 'src/app/ngrx/user-details/user-details.action';
-import { resetJwt } from 'src/app/ngrx/jwt/jwt.action';
 import { ProductsService } from 'src/app/services/products.service';
+import { UsersService } from 'src/app/services/users.service';
 
 @Component({
   selector: 'app-header',
@@ -18,7 +18,6 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit {
-  jwt$?: Observable<string>;
   userDetails$?: Observable<UserDetailsModel>;
 
   currentPath?: string;
@@ -27,6 +26,7 @@ export class HeaderComponent implements OnInit {
     private location: Location,
     private store: Store<AppState>,
     private productsService: ProductsService,
+    private usersService: UsersService,
     private router: Router
   ) {}
 
@@ -34,23 +34,19 @@ export class HeaderComponent implements OnInit {
     this.currentPath = this.location.path();
     console.log(this.currentPath);
 
-    this.jwt$ = this.store.select<string>((state) => state.jwt);
-
     this.userDetails$ = this.store.select<UserDetailsModel>(
       (state) => state.userDetails
     );
   }
 
   async onSearchClick(productName: string) {
-    const jwt = await firstValueFrom(this.jwt$!);
-    this.productsService.fetchProductsBySearchInput(productName, jwt);
+    this.productsService.fetchProductsBySearchInput(productName);
 
     this.store.dispatch(resetCheckedCategory());
   }
 
-  onLogout() {
-    this.store.dispatch(resetJwt());
-    localStorage.setItem('jwt', JSON.stringify(''));
+  async onLogout() {
+    await this.usersService.removeTokenCookie();
 
     this.store.dispatch(resetUserDetailsToNull());
     localStorage.setItem('userDetails', JSON.stringify(null));

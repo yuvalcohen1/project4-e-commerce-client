@@ -12,7 +12,6 @@ import { CartsService } from 'src/app/services/carts.service';
   styleUrls: ['./cart-items.component.css'],
 })
 export class CartItemsComponent implements OnInit {
-  jwt$?: Observable<string>;
   cartItems$?: Observable<CartItemModel[]>;
 
   constructor(
@@ -25,14 +24,11 @@ export class CartItemsComponent implements OnInit {
     this.cartItems$ = this.store.select<CartItemModel[]>(
       (state) => state.cartItems
     );
-
-    this.jwt$ = this.store.select<string>((state) => state.jwt);
   }
 
   async onDeleteCartItem(cartItemId: string) {
     try {
-      const jwt = await firstValueFrom(this.jwt$!);
-      await this.cartsService.deleteCartItem(cartItemId, jwt);
+      await this.cartsService.deleteCartItem(cartItemId);
     } catch (error) {
       this.router.navigate(['/error']);
     }

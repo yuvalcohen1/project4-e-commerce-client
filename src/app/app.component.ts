@@ -6,7 +6,6 @@ import { CartItemModel } from './models/CartItem.model';
 import { UserDetailsModel } from './models/UserDetails.model';
 import { fetchCartDetails } from './ngrx/cart-details/cart-details.action';
 import { fetchCartItems } from './ngrx/cart-items/cart-items.action';
-import { fetchJwt } from './ngrx/jwt/jwt.action';
 import { fetchUserDetails } from './ngrx/user-details/user-details.action';
 
 @Component({
@@ -18,11 +17,6 @@ export class AppComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    const jwt: string = JSON.parse(localStorage.getItem('jwt')!);
-    if (jwt) {
-      this.store.dispatch(fetchJwt({ jwt }));
-    }
-
     const userDetails: UserDetailsModel | null = JSON.parse(
       localStorage.getItem('userDetails')!
     );

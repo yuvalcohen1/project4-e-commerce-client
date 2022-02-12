@@ -13,7 +13,6 @@ import { CartsService } from 'src/app/services/carts.service';
   styleUrls: ['./shopping-page.component.css'],
 })
 export class ShoppingPageComponent implements OnInit {
-  jwt$?: Observable<string>;
   cartStatus$?: Observable<number>;
   userDetails$?: Observable<UserDetailsModel>;
   cartDetails$?: Observable<CartDetailsModel>;
@@ -25,22 +24,20 @@ export class ShoppingPageComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.jwt$ = this.store.select<string>((state) => state.jwt);
     this.cartStatus$ = this.store.select((state) => state.cartStatus);
     this.userDetails$ = this.store.select((state) => state.userDetails);
     this.cartDetails$ = this.store.select((state) => state.cartDetails);
 
     try {
-      const jwt = await firstValueFrom(this.jwt$!);
       const userDetails = await firstValueFrom(this.userDetails$);
       const cartDetails = await firstValueFrom(this.cartDetails$);
       if (userDetails && cartDetails) {
         if (!cartDetails.isOpen && !userDetails.isAdmin) {
-          await this.cartsService.createCart(jwt);
+          await this.cartsService.createCart();
         }
       }
 
-      if (!jwt || !userDetails) {
+      if (!userDetails) {
         this.router.navigate(['/error']);
       }
     } catch (error) {

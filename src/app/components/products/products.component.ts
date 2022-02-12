@@ -15,7 +15,6 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./products.component.css'],
 })
 export class ProductsComponent implements OnInit {
-  jwt$?: Observable<string>;
   userDetails$?: Observable<UserDetailsModel>;
   pressedProduct?: Observable<ProductModel>;
   products$?: Observable<ProductModel[]>;
@@ -29,10 +28,7 @@ export class ProductsComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.jwt$ = this.store.select<string>((state) => state.jwt);
-
-      const jwt = await firstValueFrom(this.jwt$);
-      await this.productsService.fetchAllProducts(jwt);
+      await this.productsService.fetchAllProducts();
 
       this.userDetails$ = this.store.select<UserDetailsModel>(
         (state) => state.userDetails
@@ -68,14 +64,4 @@ export class ProductsComponent implements OnInit {
       return;
     }
   }
-
-  // shouldHideAddToCart(product: ProductModel) {
-  //   this.cartItems$?.subscribe((cartItems) => {
-  //     const shouldHide = cartItems.some(
-  //       (cartItem) => cartItem.product._id === product._id
-  //     );
-
-  //     return shouldHide;
-  //   });
-  // }
 }

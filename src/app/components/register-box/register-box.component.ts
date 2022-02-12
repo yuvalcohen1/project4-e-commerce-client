@@ -30,14 +30,32 @@ export class RegisterBoxComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      idNum: this.fb.control(null, Validators.required),
+      idNum: this.fb.control(null, [
+        Validators.required,
+        Validators.min(100000000),
+        Validators.max(999999999),
+      ]),
       email: this.fb.control(null, [Validators.required, Validators.email]),
-      password: this.fb.control(null, [Validators.required]),
+      password: this.fb.control(null, [
+        Validators.required,
+        Validators.pattern(
+          '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
+        ),
+      ]),
       confirmPassword: this.fb.control(null, [Validators.required]),
       city: this.fb.control(null, [Validators.required]),
-      street: this.fb.control(null, [Validators.required]),
-      firstName: this.fb.control(null, [Validators.required]),
-      lastName: this.fb.control(null, [Validators.required]),
+      street: this.fb.control(null, [
+        Validators.required,
+        Validators.minLength(2),
+      ]),
+      firstName: this.fb.control(null, [
+        Validators.required,
+        Validators.minLength(2),
+      ]),
+      lastName: this.fb.control(null, [
+        Validators.required,
+        Validators.minLength(2),
+      ]),
     });
 
     this.cities$ = this.store.select<string[]>((state) => state.cities);
@@ -56,13 +74,13 @@ export class RegisterBoxComponent implements OnInit {
 
   async onSubmit() {
     try {
-      const { jwt } = await this.usersService.fetchJwtByRegister(this.form.value);
+      await this.usersService.setJwtCookieByRegister(this.form.value);
 
-      await this.usersService.fetchUserDetails(jwt);
+      await this.usersService.fetchUserDetails();
 
-      await this.cartsService.fetchCartDetails(jwt);
+      await this.cartsService.fetchCartDetails();
 
-      await this.categoriesService.fetchCategories(jwt);
+      await this.categoriesService.fetchCategories();
 
       this.router.navigate(['/home']);
     } catch (error: any) {

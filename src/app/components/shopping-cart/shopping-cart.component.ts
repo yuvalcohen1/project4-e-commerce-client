@@ -14,7 +14,6 @@ import { CartsService } from 'src/app/services/carts.service';
   styleUrls: ['./shopping-cart.component.css'],
 })
 export class ShoppingCartComponent implements OnInit {
-  jwt$?: Observable<string>;
   cartItems$?: Observable<CartItemModel[]>;
   cartDetails$!: Observable<CartDetailsModel>;
   total?: number;
@@ -26,8 +25,6 @@ export class ShoppingCartComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.jwt$ = this.store.select<string>((state) => state.jwt);
-
     this.cartItems$ = this.store.select<CartItemModel[]>(
       (state) => state.cartItems
     );
@@ -50,9 +47,8 @@ export class ShoppingCartComponent implements OnInit {
 
   async onEmptyCartItems() {
     try {
-      const jwt = await firstValueFrom(this.jwt$!);
       const cartDetails = await firstValueFrom(this.cartDetails$);
-      this.cartsService.emptyCartItemsByCartId(cartDetails._id, jwt);
+      this.cartsService.emptyCartItemsByCartId(cartDetails._id);
     } catch (error) {
       this.router.navigate(['/error']);
     }

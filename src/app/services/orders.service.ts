@@ -13,6 +13,12 @@ export class OrdersService {
 
   constructor(private http: HttpClient, private store: Store<AppState>) {}
 
+  // async downloadReceiptFile() {
+  //   (await this.http
+  //     .get(`${this.API_URL}/receipt-file`, { withCredentials: true })
+  //     .toPromise())!;
+  // }
+
   async fetchNumOfAllOrders() {
     const { numOfAllOrders } = (await this.http
       .get<{ numOfAllOrders: number }>(`${this.API_URL}/num-of-all-orders`)
@@ -20,44 +26,26 @@ export class OrdersService {
     return numOfAllOrders;
   }
 
-  fetchLastOrderDate(jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
-    return this.http.get<string>(
-      `${this.API_URL}/last-order-date`,
-      httpOptions
-    );
+  fetchLastOrderDate() {
+    return this.http.get<string>(`${this.API_URL}/last-order-date`, {
+      withCredentials: true,
+    });
   }
 
-  async fetchDatesWithThreeOrders(jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async fetchDatesWithThreeOrders() {
     const datesWithThreeOrders = (await this.http
-      .get<string[]>(`${this.API_URL}/dates-with-three-orders`, httpOptions)
+      .get<string[]>(`${this.API_URL}/dates-with-three-orders`, {
+        withCredentials: true,
+      })
       .toPromise())!;
     return datesWithThreeOrders;
   }
 
-  async createOrder(orderBody: OrderModel, jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async createOrder(orderBody: OrderModel) {
     const newOrder = (await this.http
-      .post<OrderModel>(`${this.API_URL}/create-order`, orderBody, httpOptions)
+      .post<OrderModel>(`${this.API_URL}/create-order`, orderBody, {
+        withCredentials: true,
+      })
       .toPromise())!;
 
     return newOrder;

@@ -80,6 +80,14 @@ button:hover:disabled {
   color: red;
 }
 
+.password-error {
+  position: absolute;
+  top: 52%;
+  right: -82%;
+  width: 80%;
+  color: red;
+}
+
 .jwtError {
   color: red;
   position: absolute;

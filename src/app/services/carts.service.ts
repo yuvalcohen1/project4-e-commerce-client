@@ -24,16 +24,11 @@ export class CartsService {
 
   constructor(private http: HttpClient, private store: Store) {}
 
-  async fetchCartDetails(jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async fetchCartDetails() {
     const cartDetails = (await this.http
-      .get<CartDetailsModel>(`${this.SHOPPING_CARTS_API_URL}`, httpOptions)
+      .get<CartDetailsModel>(`${this.SHOPPING_CARTS_API_URL}`, {
+        withCredentials: true,
+      })
       .toPromise())!;
 
     if (!cartDetails) {
@@ -55,19 +50,12 @@ export class CartsService {
     return cartDetails;
   }
 
-  async createCart(jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async createCart() {
     const newCart = await this.http
       .post<CartDetailsModel>(
         `${this.SHOPPING_CARTS_API_URL}/create-cart`,
         {},
-        httpOptions
+        { withCredentials: true }
       )
       .toPromise();
 
@@ -77,19 +65,12 @@ export class CartsService {
     return newCart;
   }
 
-  async closeCart(cartId: string, jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async closeCart(cartId: string) {
     const closedCart = await this.http
       .put(
         `${this.SHOPPING_CARTS_API_URL}/close-cart/${cartId}`,
         {},
-        httpOptions
+        { withCredentials: true }
       )
       .toPromise();
 
@@ -101,16 +82,11 @@ export class CartsService {
     localStorage.setItem('cartItems', JSON.stringify([]));
   }
 
-  async fetchCartItemsByCartId(cartId: string, jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async fetchCartItemsByCartId(cartId: string) {
     const cartItems = (await this.http
-      .get<CartItemModel[]>(`${this.CART_ITEMS_API_URL}/${cartId}`, httpOptions)
+      .get<CartItemModel[]>(`${this.CART_ITEMS_API_URL}/${cartId}`, {
+        withCredentials: true,
+      })
       .toPromise())!;
 
     this.store.dispatch(fetchCartItems({ cartItems }));
@@ -119,25 +95,13 @@ export class CartsService {
     return cartItems;
   }
 
-  async addCartItem(
-    cartId: string,
-    product: string,
-    quantity: number,
-    jwt: string
-  ) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async addCartItem(cartId: string, product: string, quantity: number) {
     const addCartItemBody = { cartId, product, quantity };
     const newCartItem = (await this.http
       .post<CartItemModel>(
         `${this.CART_ITEMS_API_URL}/add-cart-item`,
         addCartItemBody,
-        httpOptions
+        { withCredentials: true }
       )
       .toPromise())!;
 
@@ -154,19 +118,11 @@ export class CartsService {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }
 
-  async deleteCartItem(cartItemId: string, jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async deleteCartItem(cartItemId: string) {
     await this.http
-      .delete(
-        `${this.CART_ITEMS_API_URL}/delete-cart-item/${cartItemId}`,
-        httpOptions
-      )
+      .delete(`${this.CART_ITEMS_API_URL}/delete-cart-item/${cartItemId}`, {
+        withCredentials: true,
+      })
       .toPromise();
 
     this.store.dispatch(deleteCartItem({ deletedCartItemId: cartItemId }));
@@ -181,19 +137,11 @@ export class CartsService {
     localStorage.setItem('cartItems', JSON.stringify(cartItems));
   }
 
-  async emptyCartItemsByCartId(cartId: string, jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async emptyCartItemsByCartId(cartId: string) {
     await this.http
-      .delete(
-        `${this.CART_ITEMS_API_URL}//empty-cart-items/${cartId}`,
-        httpOptions
-      )
+      .delete(`${this.CART_ITEMS_API_URL}//empty-cart-items/${cartId}`, {
+        withCredentials: true,
+      })
       .toPromise();
 
     this.store.dispatch(emptyCartItems());

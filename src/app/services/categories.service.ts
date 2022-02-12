@@ -13,16 +13,9 @@ export class CategoriesService {
 
   constructor(private http: HttpClient, private store: Store<AppState>) {}
 
-  async fetchCategories(jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async fetchCategories() {
     const categories = (await this.http
-      .get<CategoryModel[]>(this.API_URL, httpOptions)
+      .get<CategoryModel[]>(this.API_URL, { withCredentials: true })
       .toPromise())!;
 
     this.store.dispatch(fetchCategories({ categories }));

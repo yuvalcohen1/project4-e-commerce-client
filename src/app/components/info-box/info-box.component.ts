@@ -16,7 +16,6 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./info-box.component.css'],
 })
 export class InfoBoxComponent implements OnInit {
-  jwt$?: Observable<string>;
   userDetails$?: Observable<UserDetailsModel>;
   cartDetails$?: Observable<Partial<CartDetailsModel>>;
   availableProducts$?: Observable<ProductModel[]>;
@@ -42,8 +41,6 @@ export class InfoBoxComponent implements OnInit {
         (await this.ordersService.fetchNumOfAllOrders())!;
       this.numOfAllOrders = numOfAllOrders;
 
-      this.jwt$ = this.store.select<string>((state) => state.jwt);
-
       this.userDetails$ = this.store.select<UserDetailsModel>(
         (state) => state.userDetails
       );
@@ -53,17 +50,20 @@ export class InfoBoxComponent implements OnInit {
       );
 
       this.cartDetails$.subscribe((cartDetails) => {
-        this.jwt$?.subscribe((jwt) => {
-          if (jwt) {
+        this.userDetails$?.subscribe((userDetails) => {
+          if (userDetails) {
             this.ordersService
-              .fetchLastOrderDate(jwt)
+              .fetchLastOrderDate()
               .subscribe((lastOrderDate) => {
-                if (cartDetails._id) {
+                if (cartDetails._id && cartDetails.isOpen) {
                   this.notifications = `You have an open cart from ${this.pipe.transform(
                     cartDetails.createdAt,
                     'shortDate'
                   )!}`;
-                } else if (!cartDetails._id && lastOrderDate) {
+                } else if (
+                  (!cartDetails._id || !cartDetails.isOpen) &&
+                  lastOrderDate
+                ) {
                   this.notifications = `Your last purchase was on ${this.pipe.transform(
                     lastOrderDate,
                     'shortDate'

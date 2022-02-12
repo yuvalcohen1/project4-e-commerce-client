@@ -24,7 +24,6 @@ import { OrdersService } from 'src/app/services/orders.service';
 export class OrderFormComponent implements OnInit {
   form!: FormGroup;
 
-  jwt$?: Observable<string>;
   cartDetails$!: Observable<CartDetailsModel>;
   userDetails$?: Observable<UserDetailsModel>;
   cartItems$?: Observable<CartItemModel[]>;
@@ -37,12 +36,6 @@ export class OrderFormComponent implements OnInit {
     month: this.calendar.getToday().month,
     day: this.calendar.getToday().day,
   };
-
-  // defaultShippingDate = `${new Date().getFullYear()}-${
-  //   new Date().getMonth() + 1 < 10
-  //     ? `0${new Date().getMonth() + 1}`
-  //     : new Date().getMonth() + 1
-  // }-${new Date().getDate() + 1}`;
 
   @Output()
   newItemEvent = new EventEmitter<number>();
@@ -64,11 +57,8 @@ export class OrderFormComponent implements OnInit {
       creditCardNumber: this.fb.control('', Validators.required),
     });
 
-    this.jwt$ = this.store.select<string>((state) => state.jwt);
-
-    const jwt = await firstValueFrom(this.jwt$);
     this.datesWithThreeOrders =
-      await this.ordersService.fetchDatesWithThreeOrders(jwt);
+      await this.ordersService.fetchDatesWithThreeOrders();
 
     this.cartDetails$ = this.store.select<CartDetailsModel>(
       (state) => state.cartDetails
@@ -140,11 +130,9 @@ export class OrderFormComponent implements OnInit {
         fourLastDigitsOfPayment: Number(fourLastDigitsOfPayment),
       };
 
-      const jwt = await firstValueFrom(this.jwt$!);
+      await this.ordersService.createOrder(orderBody);
 
-      await this.ordersService.createOrder(orderBody, jwt);
-
-      await this.cartsService.closeCart(cartDetails!._id, jwt);
+      await this.cartsService.closeCart(cartDetails!._id);
 
       this.newItemEvent.emit();
     } catch (error) {

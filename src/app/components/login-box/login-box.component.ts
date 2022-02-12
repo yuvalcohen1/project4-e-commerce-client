@@ -17,7 +17,6 @@ import { UsersService } from 'src/app/services/users.service';
   styleUrls: ['./login-box.component.css'],
 })
 export class LoginBoxComponent implements OnInit {
-  jwt$?: Observable<string>;
   userDetails$?: Observable<UserDetailsModel>;
   cartDetails$?: Observable<CartDetailsModel>;
 
@@ -37,8 +36,6 @@ export class LoginBoxComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.jwt$ = this.store.select<string>((state) => state.jwt);
-
       this.userDetails$ = this.store.select<UserDetailsModel>(
         (state) => state.userDetails
       );
@@ -47,11 +44,10 @@ export class LoginBoxComponent implements OnInit {
         (state) => state.cartDetails
       );
 
-      this.jwt$.subscribe(async (jwt) => {
-        if (jwt) {
-          await this.cartsService.fetchCartDetails(jwt);
-        }
-      });
+      const cartDetails = await firstValueFrom(this.cartDetails$);
+      if (!cartDetails) {
+        await this.cartsService.fetchCartDetails();
+      }
     } catch (error) {
       this.router.navigate(['/error']);
     }
@@ -59,9 +55,7 @@ export class LoginBoxComponent implements OnInit {
 
   async onStartShoppingClick() {
     try {
-      const jwt = await firstValueFrom(this.jwt$!);
-
-      await this.cartsService.createCart(jwt);
+      await this.cartsService.createCart();
 
       this.router.navigate(['/shopping']);
     } catch (error) {
@@ -80,16 +74,16 @@ export class LoginBoxComponent implements OnInit {
         password: this.password!,
       };
 
-      const jwt = await this.usersService.fetchJwtByLogin(loginDetails);
+      await this.usersService.setJwtCookieByLogin(loginDetails);
 
       loginForm.reset();
 
-      const userDetails = await this.usersService.fetchUserDetails(jwt);
+      const userDetails = await this.usersService.fetchUserDetails();
 
-      const cartDetails = await this.cartsService.fetchCartDetails(jwt);
+      const cartDetails = await this.cartsService.fetchCartDetails();
 
       if (cartDetails) {
-        await this.cartsService.fetchCartItemsByCartId(cartDetails._id, jwt);
+        await this.cartsService.fetchCartItemsByCartId(cartDetails._id);
       }
 
       if (userDetails?.isAdmin === 1) {

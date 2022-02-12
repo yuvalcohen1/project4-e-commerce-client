@@ -18,16 +18,9 @@ export class ProductsService {
 
   constructor(private http: HttpClient, private store: Store<AppState>) {}
 
-  async fetchAllProducts(jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async fetchAllProducts() {
     const products = (await this.http
-      .get<ProductModel[]>(`${this.API_URL}/all`, httpOptions)
+      .get<ProductModel[]>(`${this.API_URL}/all`, { withCredentials: true })
       .toPromise())!;
 
     this.store.dispatch(fetchProducts({ products }));
@@ -35,32 +28,22 @@ export class ProductsService {
     return products;
   }
 
-  async fetchProductsByCategoryId(categoryId: string, jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async fetchProductsByCategoryId(categoryId: string) {
     const products = (await this.http
-      .get<ProductModel[]>(`${this.API_URL}/${categoryId}`, httpOptions)
+      .get<ProductModel[]>(`${this.API_URL}/${categoryId}`, {
+        withCredentials: true,
+      })
       .toPromise())!;
 
     this.store.dispatch(fetchProducts({ products }));
     return products;
   }
 
-  async fetchProductsBySearchInput(productName: string, jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async fetchProductsBySearchInput(productName: string) {
     const products = (await this.http
-      .get<ProductModel[]>(`${this.API_URL}/search/${productName}`, httpOptions)
+      .get<ProductModel[]>(`${this.API_URL}/search/${productName}`, {
+        withCredentials: true,
+      })
       .toPromise())!;
 
     this.store.dispatch(fetchProducts({ products }));
@@ -76,20 +59,11 @@ export class ProductsService {
     return numOfAvailableProducts;
   }
 
-  async addProduct(addProductBody: Partial<ProductModel>, jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async addProduct(addProductBody: Partial<ProductModel>) {
     const newProduct = (await this.http
-      .post<ProductModel>(
-        `${this.API_URL}/add-product`,
-        addProductBody,
-        httpOptions
-      )
+      .post<ProductModel>(`${this.API_URL}/add-product`, addProductBody, {
+        withCredentials: true,
+      })
       .toPromise())!;
 
     const checkedCategory = await firstValueFrom(
@@ -105,20 +79,11 @@ export class ProductsService {
     return newProduct;
   }
 
-  async updateProduct(updateProductBody: Partial<ProductModel>, jwt: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${jwt}`,
-      }),
-    };
-
+  async updateProduct(updateProductBody: Partial<ProductModel>) {
     const updatedProduct = (await this.http
-      .put<ProductModel>(
-        `${this.API_URL}/update-product`,
-        updateProductBody,
-        httpOptions
-      )
+      .put<ProductModel>(`${this.API_URL}/update-product`, updateProductBody, {
+        withCredentials: true,
+      })
       .toPromise())!;
     this.store.dispatch(updateProduct({ updatedProduct }));
     return updatedProduct;

@@ -15,7 +15,6 @@ import { ProductsService } from 'src/app/services/products.service';
   styleUrls: ['./admin-products-management-box.component.css'],
 })
 export class AdminProductsManagementBoxComponent implements OnInit {
-  jwt$?: Observable<string>;
   categories$?: Observable<CategoryModel[]>;
   pressedProduct$?: Observable<ProductModel>;
   cartDetails$?: Observable<CartDetailsModel>;
@@ -32,8 +31,6 @@ export class AdminProductsManagementBoxComponent implements OnInit {
     this.categories$ = this.store.select<CategoryModel[]>(
       (state) => state.categories
     );
-
-    this.jwt$ = this.store.select<string>((state) => state.jwt);
 
     this.pressedProduct$ = this.store.select<ProductModel>(
       (state) => state.pressedProduct
@@ -53,7 +50,6 @@ export class AdminProductsManagementBoxComponent implements OnInit {
     productForm: any
   ) {
     try {
-      const jwt = await firstValueFrom(this.jwt$!);
       const pressedProduct = await firstValueFrom(this.pressedProduct$!);
       if (pressedProduct._id) {
         const priceAsNumber = Number(price);
@@ -64,7 +60,7 @@ export class AdminProductsManagementBoxComponent implements OnInit {
           price: priceAsNumber,
           productName,
         };
-        await this.productsService.updateProduct(updateProductBody, jwt);
+        await this.productsService.updateProduct(updateProductBody);
         return;
       }
 
@@ -75,7 +71,7 @@ export class AdminProductsManagementBoxComponent implements OnInit {
         price: priceAsNumber,
         productName,
       };
-      await this.productsService.addProduct(addProductBody, jwt);
+      await this.productsService.addProduct(addProductBody);
       productForm.reset();
       return;
     } catch (error) {

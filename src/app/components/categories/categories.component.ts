@@ -12,7 +12,6 @@ import { CategoriesService } from 'src/app/services/categories.service';
   styleUrls: ['./categories.component.css'],
 })
 export class CategoriesComponent implements OnInit {
-  jwt$?: Observable<string>;
   cartStatus$?: Observable<number>;
 
   categories?: CategoryModel[];
@@ -25,11 +24,9 @@ export class CategoriesComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.jwt$ = this.store.select<string>((state) => state.jwt);
       this.cartStatus$ = this.store.select<number>((state) => state.cartStatus);
 
-      const jwt = await firstValueFrom(this.jwt$);
-      const categories = await this.categoriesService.fetchCategories(jwt);
+      const categories = await this.categoriesService.fetchCategories();
       this.categories = categories;
     } catch (error) {
       this.router.navigate(['/error']);

@@ -32,7 +32,6 @@ import { cartStatusReducer } from './ngrx/cart-status/cart-status.reducer';
 import { categoriesReducer } from './ngrx/categories/categories.reducer';
 import { checkedCategoryReducer } from './ngrx/checked-category/checked-category.reducer';
 import { citiesReducer } from './ngrx/cities/cities.reducer';
-import { jwtReducer } from './ngrx/jwt/jwt.reducer';
 import { productsReducer } from './ngrx/products/products.reducer';
 import { userDetailsReducer } from './ngrx/user-details/user-details.reducer';
 import { ErrorPageComponent } from './pages/error-page/error-page.component';
@@ -72,7 +71,6 @@ import { ShoppingPageComponent } from './pages/shopping-page/shopping-page.compo
     FormsModule,
     ReactiveFormsModule,
     StoreModule.forRoot<AppState>({
-      jwt: jwtReducer,
       userDetails: userDetailsReducer,
       products: productsReducer,
       cartStatus: cartStatusReducer,

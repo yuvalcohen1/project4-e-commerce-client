@@ -15,9 +15,26 @@
           />
           <div
             class="error"
-            *ngIf="form.get('idNum')!.invalid && form.get('idNum')!.touched"
+            *ngIf="
+              form.get('idNum')!.invalid &&
+              form.get('idNum')!.touched &&
+              !(
+                form.get('idNum')!.hasError('min') ||
+                form.get('idNum')!.hasError('max')
+              )
+            "
           >
             ID is required
+          </div>
+          <div
+            class="error"
+            *ngIf="
+              form.get('idNum')!.touched &&
+              (form.get('idNum')!.hasError('min') ||
+                form.get('idNum')!.hasError('max'))
+            "
+          >
+            ID must be 9 digits
           </div>
         </div>
 
@@ -49,11 +66,24 @@
           <div
             class="error"
             *ngIf="
-              form.get('password')!.invalid && form.get('password')!.touched
+              form.get('password')!.invalid &&
+              form.get('password')!.touched &&
+              !form.get('password')!.hasError('pattern')
             "
           >
             Password is required
           </div>
+        </div>
+        <div
+          class="password-error"
+          *ngIf="
+            form.get('password')!.touched &&
+            form.get('password')!.hasError('pattern')
+          "
+        >
+          Password must be at least 8 characters in length and include: At least
+          one digit, at least one lowercase character, at least one uppercase
+          character, and at least one special character
         </div>
 
         <div class="field">

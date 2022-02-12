@@ -2,13 +2,7 @@
   <h1>purchase was made successfully</h1>
   <div>
     To download the receipt,
-    <a
-      href="http://localhost:3000/orders/receipt-file/{{
-        (userDetails$ | async)!._id
-      }}"
-      >click here</a
-    >
-    <!-- <button (click)="onClick()">click here</button> -->
+    <a href="http://localhost:3000/orders/receipt-file">click here</a>
   </div>
   <button (click)="onConfirm()">confirm</button>
 </div>
