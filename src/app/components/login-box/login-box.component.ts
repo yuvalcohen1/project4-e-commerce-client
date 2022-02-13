@@ -63,7 +63,7 @@ export class LoginBoxComponent implements OnInit {
     }
   }
 
-  async onResumeShoppingClick() {
+  async onResumeShoppingOrManageProducts() {
     this.router.navigate(['/shopping']);
   }
 

@@ -2,19 +2,33 @@
   <div *ngIf="(userDetails$ | async) && (cartDetails$ | async)">
     <button
       class="shopping-btn"
-      *ngIf="!(cartDetails$ | async)!._id || !(cartDetails$ | async)!.isOpen"
+      *ngIf="
+        (!(cartDetails$ | async)!._id || !(cartDetails$ | async)!.isOpen) &&
+        !(userDetails$ | async)!.isAdmin
+      "
       (click)="onStartShoppingClick()"
     >
-      start shopping
+      Start Shopping
     </button>
-  </div>
-  <div *ngIf="(userDetails$ | async) && (cartDetails$ | async)">
+    <!-- </div>
+  <div *ngIf="(userDetails$ | async) && (cartDetails$ | async)"> -->
     <button
       class="shopping-btn"
-      *ngIf="(cartDetails$ | async)!._id && (cartDetails$ | async)!.isOpen"
-      (click)="onResumeShoppingClick()"
+      *ngIf="
+        (cartDetails$ | async)!._id &&
+        (cartDetails$ | async)!.isOpen &&
+        !(userDetails$ | async)!.isAdmin
+      "
+      (click)="onResumeShoppingOrManageProducts()"
     >
-      resume shopping
+      Resume Shopping
+    </button>
+    <button
+      class="shopping-btn"
+      *ngIf="(userDetails$ | async)!.isAdmin"
+      (click)="onResumeShoppingOrManageProducts()"
+    >
+      Manage Products
     </button>
   </div>
 
