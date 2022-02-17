@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'shopping', component: ShoppingPageComponent },
   { path: 'order', component: OrderPageComponent },
   { path: 'error', component: ErrorPageComponent },
+  { path: '**', redirectTo: '/error' },
 ];
 
 @NgModule({
