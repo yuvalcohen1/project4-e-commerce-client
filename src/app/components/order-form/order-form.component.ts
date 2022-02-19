@@ -75,10 +75,14 @@ export class OrderFormComponent implements OnInit {
     this.cities$ = this.store.select<string[]>((state) => state.cities);
 
     this.userDetails$.subscribe((userDetails) => {
-      this.form.patchValue({
-        cityForShipping: userDetails.city,
-        streetForShipping: userDetails.street,
-      });
+      if (userDetails) {
+        if (userDetails.city && userDetails.street) {
+          this.form.patchValue({
+            cityForShipping: userDetails.city,
+            streetForShipping: userDetails.street,
+          });
+        }
+      }
     });
   }
 
