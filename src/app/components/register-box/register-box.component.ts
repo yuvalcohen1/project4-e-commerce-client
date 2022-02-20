@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/models/AppState.model';
+import { UserDetailsModel } from 'src/app/models/UserDetails.model';
 import { CartsService } from 'src/app/services/carts.service';
 import { CategoriesService } from 'src/app/services/categories.service';
 import { UsersService } from 'src/app/services/users.service';
@@ -29,6 +30,14 @@ export class RegisterBoxComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.store
+      .select<UserDetailsModel | null>((state) => state.userDetails)
+      .subscribe((userDetails) => {
+        if (userDetails && userDetails._id) {
+          this.router.navigate(['/shopping']);
+        }
+      });
+
     this.form = this.fb.group({
       idNum: this.fb.control(null, [
         Validators.required,
