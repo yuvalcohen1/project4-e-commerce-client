@@ -32,7 +32,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentPath = this.location.path();
-    console.log(this.currentPath);
 
     this.userDetails$ = this.store.select<UserDetailsModel>(
       (state) => state.userDetails

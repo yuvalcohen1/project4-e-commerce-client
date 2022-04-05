@@ -7,8 +7,6 @@ import { AppState } from 'src/app/models/AppState.model';
 import { CartDetailsModel } from 'src/app/models/CartDetails.model';
 import { UserDetailsModel } from 'src/app/models/UserDetails.model';
 import { CartsService } from 'src/app/services/carts.service';
-import { CategoriesService } from 'src/app/services/categories.service';
-import { OrdersService } from 'src/app/services/orders.service';
 import { UsersService } from 'src/app/services/users.service';
 
 @Component({
@@ -27,9 +25,7 @@ export class LoginBoxComponent implements OnInit {
 
   constructor(
     private usersService: UsersService,
-    private categoriesService: CategoriesService,
     private cartsService: CartsService,
-    private ordersService: OrdersService,
     private store: Store<AppState>,
     private router: Router
   ) {}

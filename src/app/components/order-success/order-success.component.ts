@@ -3,8 +3,6 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AppState } from 'src/app/models/AppState.model';
 import { UserDetailsModel } from 'src/app/models/UserDetails.model';
-import { CartsService } from 'src/app/services/carts.service';
-import { OrdersService } from 'src/app/services/orders.service';
 
 @Component({
   selector: 'app-order-success',
@@ -21,8 +19,6 @@ export class OrderSuccessComponent implements OnInit {
   newItemEvent = new EventEmitter<number>();
 
   constructor(
-    private cartsService: CartsService,
-    private ordersService: OrdersService,
     private store: Store<AppState>
   ) {}
 

@@ -1,9 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { AppState } from 'src/app/models/AppState.model';
-import { CartItemModel } from 'src/app/models/CartItem.model';
 
 @Component({
   selector: 'app-order-page',
@@ -13,7 +9,7 @@ import { CartItemModel } from 'src/app/models/CartItem.model';
 export class OrderPageComponent implements OnInit {
   orderSuccess: number = 0;
 
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
